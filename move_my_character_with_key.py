@@ -48,8 +48,19 @@ while running:
     update_canvas()
     handle_events()
     frame=(frame+1)%4
-    x+=dir1*5
-    y+=dir2*5
+    if 20<=x<=780:
+        x+=dir1*5
+        if x>780:
+            x=780
+        elif x<20:
+            x=20
+
+    if 30<=y<=580:
+        y+=dir2*5
+        if y>580:
+            y=580
+        elif y<30:
+            y=30
     delay(0.08)
 
 
