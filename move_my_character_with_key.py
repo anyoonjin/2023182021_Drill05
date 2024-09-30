@@ -7,7 +7,7 @@ cha = load_image('character.png')
 
 
 def handle_events():
-    global running ,dir1,dir2   #dir1 좌우 dir2 상하
+    global running ,dir1,dir2,frame_y   #dir1 좌우 dir2 상하
 
     events = get_events()
     for event in events:
@@ -15,12 +15,16 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_LEFT:
+                frame_y=2
                 dir1-=1
             elif event.key == SDLK_RIGHT:
+                frame_y=1
                 dir1+=1
             elif event.key == SDLK_UP:
+                frame_y=0
                 dir2 +=1
             elif event.key == SDLK_DOWN:
+                frame_y=3
                 dir2 -=1
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_LEFT:
@@ -38,16 +42,18 @@ x = 800 // 2
 y= 600//6
 dir1 = 0
 dir2 = 0
-frame = 0
+frame_x = 0
+frame_y = 0 #캐릭터 방향 조정
 len = 300//4
 
 while running:
     clear_canvas()
     grass.draw(400,300)
-    cha.clip_draw(frame*len,len,len,len,x,y)
+    cha.clip_draw(frame_x*len,frame_y*len,len,len,x,y)
     update_canvas()
     handle_events()
-    frame=(frame+1)%4
+    frame_x=(frame_x+1)%4
+
     if 20<=x<=780:
         x+=dir1*5
         if x>780:
@@ -61,7 +67,7 @@ while running:
             y=580
         elif y<30:
             y=30
-    delay(0.08)
+    delay(0.06)
 
 
 close_canvas()
